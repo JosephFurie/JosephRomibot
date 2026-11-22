@@ -141,6 +141,21 @@ public class Drivetrain extends SubsystemBase {
     return m_gyro.getAngleZ();
   }
 
+  public double getGyroAdjustment() {
+    double headingDifference = getGyroAngleZ() - targetHeading;
+    headingDifference %= 360;
+
+    if (headingDifference < -180) {
+      headingDifference += 360;
+    } else if (headingDifference > 180) {
+      headingDifference -= 360;
+
+    double gyroAdjust = headingDifference * Constants.GYRO_ADJUST_SCALE_COEFFICIENT;
+
+    return gyroAdjust;
+    }
+  }
+
   /** Reset the gyro. */
   public void resetGyro() {
     m_gyro.reset();
