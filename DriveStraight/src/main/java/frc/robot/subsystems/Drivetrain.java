@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.romi.RomiGyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
   private static final double kCountsPerRevolution = 1440.0;
@@ -146,14 +147,13 @@ public class Drivetrain extends SubsystemBase {
     headingDifference %= 360;
 
     if (headingDifference < -180) {
-      headingDifference += 360;
+      headingDifference += 180;
     } else if (headingDifference > 180) {
-      headingDifference -= 360;
-
-    double gyroAdjust = headingDifference * Constants.GYRO_ADJUST_SCALE_COEFFICIENT;
-
-    return gyroAdjust;
+      headingDifference -= 180;
     }
+    double gyroAdjust = headingDifference * Constants.GYRO_ADJUST_SCALE_COEFFICIENT;
+    System.out.println(headingDifference);
+    return gyroAdjust;
   }
 
   /** Reset the gyro. */
